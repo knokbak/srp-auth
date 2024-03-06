@@ -54,7 +54,7 @@ Computes `M1` which can be used by the server to verify the client's authenticit
 - `encoded.M1` (string) :: The client's authentication key (`M1`) encoded as hex.
 
 ### await verifyServer(M2: string | Uint8Array): Promise\<void\>
-Computes `M1` which can be used by the server to verify the client's authenticity, without sending the user's password in plain text.
+Verifies that the server holds the verifier (`v`) that was originally created by the client during setup. This authenticates the server.
 
 - `M2` (string | Uint8Array) :: The server's authentication key (`M2`), which should be provided by the server. If a string is provided, it must be hex encoded.
 
