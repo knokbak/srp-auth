@@ -58,7 +58,7 @@ Verifies that the server holds the verifier (`v`) that was originally created by
 
 - `M2` (string | Uint8Array) :: The server's authentication key (`M2`), which should be provided by the server. If a string is provided, it must be hex encoded.
 
-> ⚠️ `verifyServer(...)` will throw an `SRPError` if M2 does not match its expected value. If an error is thrown, the client may still have passed authentication, but the server **cannot** be trusted. You may be caught in the middle of a MitM attack!
+> ⚠️ `verifyServer(...)` will throw an `SRPError` if `M2` does not match its expected value. If an error is thrown, the client may still have passed authentication, but the server **cannot** be trusted. You may be caught in the middle of a MitM attack!
 
 **Returns:** *void*
 
