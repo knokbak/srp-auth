@@ -4,6 +4,28 @@
 
 SRP is a protocol which allows a server to authenticate a client without transmitting the client's password in plain text. SRP is an implementation of password-authenticated key exchange (PAKE). SRP (as a protocol) is used by services such as ProtonMail and AWS Cognito.
 
+## The principles
+- Attackers have complete knowledge of the protocol.
+- Attackers have access to a large dictionary of commonly used passwords.
+- Attackers can eavesdrop on all communications between client and server
+- Attackers can intercept, modify, and forge arbitrary messages between client and server.
+- A mutually trusted third party is not available.
+
+[[srp.stanford.edu]](http://srp.stanford.edu/whatisit.html)
+
+In essence, SRP *should* make it possible to carry out authentication publicly, between a client and a server, without ever transmitting the client's password. Additionally, at no point does the server have access to the client's plain text password.
+
+Keep in mind that this library **does not** verify whether or not a message sent between the client and server has been modified. This library purely implements a PAKE-like authentication protocol. If you need to do this, you must handle verification yourself.
+
+## Use cases
+Really, anywhere you are using usernames and password to authenticate users, you can use SRP!
+
+**If the connection IS NOT secure:**   
+SRP *should* prevent an attacker from determining the user's plain text password. The server is *should* also not be able to derive the user's plain text password.
+
+**If the connection IS secure:**   
+If you are already using a technology such as HTTPS, it is unlikely that SRP will provide any tangible protection against MitM attacks, as HTTPS should do this for you. SRP *should* prevent the server from deriving the user's plain text password.
+
 # API
 
 ## class ClientSetup(config: ClientSetupConfig)
