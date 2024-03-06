@@ -21,7 +21,7 @@ Keep in mind that this library **does not** verify whether or not a message sent
 Really, anywhere you are using usernames and password to authenticate users, you can use SRP!
 
 **If the connection IS NOT secure:**   
-SRP *should* prevent an attacker from determining the user's plain text password. The server is *should* also not be able to derive the user's plain text password.
+SRP *should* prevent an attacker from determining the user's plain text password. The server *should* also not be able to derive the user's plain text password.
 
 **If the connection IS secure:**   
 If you are already using a technology such as HTTPS, it is unlikely that SRP will provide any tangible protection against MitM attacks, as HTTPS should do this for you. SRP *should* prevent the server from deriving the user's plain text password.
