@@ -34,6 +34,61 @@ An `SRPError` indicates that either you have passed invalid variables to the lib
 
 An `SRPSecurityViolation` indicates that something has gone severely wrong, and the library does not think that the other party is geniune. For example, if the client or server fails authentication. If this happens, even whilst the user is authenticated, deauthenticate them and require reauthentication.
 
+# Example
+
+## Setup
+
+### Client-side
+
+```ts
+username: string
+password: string
+```
+
+```ts
+import { ClientSetup, Algorithm, Groups } from 'srp-auth';
+
+const setup = new ClientSetup({
+    username: username,
+    password: password,
+    group: Groups.b2048,
+    algorithm: Algorithm.SHA3_512,
+});
+
+const { I, encoded } = await setup.init();
+
+// send I, encoded.v and encoded.s to the server
+```
+
+### Server-side
+
+```ts
+I: string
+v: string
+s: string
+```
+
+```ts
+import { ServerSetup, Algorithm, Groups } from 'srp-auth';
+
+const setup = new ServerSetup({
+    I: I,
+    v: v,
+    s: s,
+    group: Groups.b2048,
+    algorithm: Algorithm.SHA3_512,
+});
+
+await setup.verify();
+
+// store I, v and s in the server's database.
+// I is the username
+```
+
+## Authenticating
+
+TODO
+
 # API
 
 ## class ClientSetup(config: ClientSetupConfig)
