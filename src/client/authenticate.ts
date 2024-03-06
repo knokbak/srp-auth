@@ -4,16 +4,28 @@
  * License: https://github.com/knokbak/srp-auth
  */
 
-import { SRPError } from '../util/error';
+import { SRPError, SRPSecurityViolation } from '../util/error';
 import { Group } from '../util/groups';
 import { Algorithm, hash } from '../util/hash';
 import { doesMatch, powMod, toBigInt, toHex, toString, toUint8Array } from '../util/math';
 import { random } from '../util/random';
 
 export type ClientAuthenticateConfig = {
+    /**
+     * The username used for authentication.
+     */
     username: string;
+    /**
+     * The plain text password. There is no need to hash this beforehand!
+     */
     password: string;
+    /**
+     * The SRP group to use. The built-in groups are from [RFC 5054](https://datatracker.ietf.org/doc/html/rfc5054#appendix-A).
+     */
     group: Group;
+    /**
+     * The hashing algorithm to use.
+     */
     algorithm: Algorithm;
 }
 
@@ -59,6 +71,9 @@ export class ClientAuthenticate {
         this.algorithm = config.algorithm;
     }
 
+    /**
+     * Computes `A`, the client's ephemeral session key. This should be sent to the server, along with `I`.
+     */
     public async init (): Promise<ClientAuthenticateInit> {
         // generate a random 256 bit value (session key)
         const A = this.computeA();
@@ -85,6 +100,11 @@ export class ClientAuthenticate {
         return A;
     }
 
+    /**
+     * Computes `u` (a combination of both the client and server's ephemeral session keys `A` and `B`), `S` (the session key) and `K` (the client's key).
+     * @param B The server's ephemeral session key (`B`), which should be provided by the server. If a string is provided, it must be hex encoded.
+     * @param s The salt (`s`) which was originally calculated by the client but is now stored by the server. If a string is provided, it must be hex encoded.
+     */
     public async exchange (B: string | Uint8Array, s: string | Uint8Array): Promise<void> {
         if (!this.A) {
             throw new SRPError('A must be set before exchanging B');
@@ -149,6 +169,9 @@ export class ClientAuthenticate {
         return toBigInt(x);
     }
 
+    /**
+     * Computes `M1` which can be used by the server to verify the client's authenticity, without sending the user's password in plain text.
+     */
     public async authenticate (): Promise<ClientAuthenticateResult> {
         if (!this.s || !this.A || !this.B || !this.K) {
             throw new SRPError('s, A, B, and K must be set before authenticating');
@@ -179,6 +202,12 @@ export class ClientAuthenticate {
         };
     }
 
+    /**
+     * Verifies that the server holds the verifier (`v`) that was originally created by the client during setup. This authenticates the server.
+     * > ⚠️ **Warning**: `verifyServer(...)` will throw an `SRPSecurityViolation` if `M2` does not match its expected value. If an error is thrown, the client may still have passed authentication, but the server **cannot** be trusted. The server is either misconfigured, or is a malicious attacker who is blindly accepting anything you throw at them. You may be caught in the middle of a MitM attack!
+     * @param M2 The server's authentication key (`M2`), which should be provided by the server. If a string is provided, it must be hex encoded.
+     * @throws {SRPSecurityViolation} if `M2` does not match its expected value.
+     */
     public async verifyServer (M2: string | Uint8Array): Promise<void> {
         if (!this.A || !this.M1 || !this.K) {
             throw new SRPError('A, M1, and K must be set before verifying the server');
@@ -192,7 +221,7 @@ export class ClientAuthenticate {
         }
 
         if (doesMatch(expected, M2)) {
-            throw new SRPError('Server-supplied M2 does not match the expected value\nThis is probably a misconfiguration, but possibly a MitM attack!');
+            throw new SRPSecurityViolation('Server-supplied M2 does not match the expected value\nThis is probably a misconfiguration, but possibly a MitM attack!');
         }
     }
 }

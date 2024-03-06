@@ -10,3 +10,10 @@ export class SRPError extends Error {
         this.name = 'SRPError';
     }
 }
+
+export class SRPSecurityViolation extends SRPError {
+    constructor (message: string) {
+        super(message);
+        this.name = 'SRPSecurityViolation';
+    }
+}
