@@ -1,0 +1,29 @@
+{
+  "name": "srp-auth",
+  "version": "1.0.0",
+  "description": "An SRP library for both the client and server.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knokbak/srp-auth.git"
+  },
+  "keywords": [
+    "srp",
+    "auth",
+    "authentication",
+    "pake"
+  ],
+  "author": "Ollie Killean",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/knokbak/srp-auth/issues"
+  },
+  "homepage": "https://github.com/knokbak/srp-auth#readme",
+  "dependencies": {
+    "@types/node": "^20.11.25",
+    "hash-wasm": "^4.11.0"
+  }
+}
