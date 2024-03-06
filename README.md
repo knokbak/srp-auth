@@ -26,6 +26,14 @@ SRP *should* prevent an attacker from determining the user's plain text password
 **If the connection IS secure:**   
 If you are already using a technology such as HTTPS, it is unlikely that SRP will provide any tangible protection against MitM attacks, as HTTPS should do this for you. SRP *should* prevent the server from deriving the user's plain text password.
 
+## Best practices
+
+If the library throws an error, start over from the beginning.
+
+An `SRPError` indicates that either you have passed invalid variables to the library, called functions out-of-order, or (rarely) the library has malfunctioned.
+
+An `SRPSecurityViolation` indicates that something has gone severely wrong, and the library does not think that the other party is geniune. For example, if the client or server fails authentication. If this happens, even whilst the user is authenticated, de-authenticate them and require re-authentication.
+
 # API
 
 ## class ClientSetup(config: ClientSetupConfig)
