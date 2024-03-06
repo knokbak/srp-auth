@@ -28,7 +28,7 @@ If you are already using a technology such as HTTPS, it is unlikely that SRP wil
 
 ## Best practices
 
-If the library throws an error, start the session over from the beginning. Throw anything that the client and server have already agreed on away and have the client reinitialize.
+If the library throws an error, start the session over from the beginning. Throw everything that the client and server have already agreed upon away and have the client reinitialize.
 
 An `SRPError` indicates that either you have passed invalid variables to the library, called functions out-of-order, or (rarely) the library has malfunctioned.
 
