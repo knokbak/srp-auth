@@ -25,7 +25,11 @@ export function toUint8Array (n: bigint | string): Uint8Array {
     return arr;
 }
 
-export function toHex (arr: Uint8Array): string {
+export function toHex (arr: Uint8Array | bigint): string {
+    if (typeof arr === 'bigint') {
+        arr = toUint8Array(arr);
+    }
+
     let hex = '';
     for (let i = 0; i < arr.length; i++) {
         hex += arr[i].toString(16).padStart(2, '0');

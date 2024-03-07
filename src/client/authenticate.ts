@@ -30,20 +30,35 @@ export type ClientAuthenticateConfig = {
 }
 
 export type ClientAuthenticateInit = {
+    /**
+     * The username in plain text. This should be sent to the server, **not the original username provided to the library**!
+     */
     I: string;
     raw: {
+        /**
+         * The client's ephemeral session key (`A`) as a Uint8Array.
+         */
         A: Uint8Array;
     }
     encoded: {
+        /**
+         * The client's ephemeral session key (`A`) encoded as hex.
+         */
         A: string;
     }
 }
 
 export type ClientAuthenticateResult = {
     raw: {
+        /**
+         * The client's authentication key (`M1`), derived from `N`, `g`, `s`, `A`, `B`, `I` and `K`, as a Uint8Array.
+         */
         M1: Uint8Array;
     }
     encoded: {
+        /**
+         * The client's authentication key (`M1`) encoded as hex.
+         */
         M1: string;
     }
 }
