@@ -148,6 +148,7 @@ Verifies that the server holds the verifier (`v`) that was originally created by
 **Returns:** *void*
 
 # Performance
+Running on the main Node.JS thread. No multithreading.
 
 ## SetupClient
 
