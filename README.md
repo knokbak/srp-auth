@@ -157,6 +157,7 @@ Running on the main Node.JS thread. No multithreading.
 | 1024 bits   | SHA3-256  | 225/s         |
 | 1024 bits   | SHA3-512  | 158/s         |
 | 2048 bits   | SHA3-256  | 114/s         |
+| 2048 bits   | SHA3-384  | 85/s          |
 | 2048 bits   | SHA3-512  | 66/s          |
 | 4096 bits   | SHA3-256  | 41/s          |
 | 4096 bits   | SHA3-512  | 22/s          |

@@ -8,8 +8,8 @@ const { ClientSetup, Algorithm, Groups, ClientAuthenticate } = require('./dist')
         const setup = new ClientSetup({
             username: 'hello',
             password: 'world',
-            group: Groups.b4096,
-            algorithm: Algorithm.SHA3_512,
+            group: Groups.b2048,
+            algorithm: Algorithm.SHA3_384,
         });
         
         await setup.init().then(console.log).catch(console.error);
