@@ -147,6 +147,19 @@ Verifies that the server holds the verifier (`v`) that was originally created by
 
 **Returns:** *void*
 
+# Performance
+
+## SetupClient
+
+| Group       | Algorithm | Speed (OPS/s) |
+|-------------|-----------|---------------|
+| 1024 bits   | SHA3-256  | 225/s         |
+| 1024 bits   | SHA3-512  | 158/s         |
+| 2048 bits   | SHA3-256  | 114/s         |
+| 2048 bits   | SHA3-512  | 66/s          |
+| 4096 bits   | SHA3-256  | 41/s          |
+| 4096 bits   | SHA3-512  | 22/s          |
+
 <!--# Behind the scenes
 
 `H(...)` = A hashing algorithm, such as SHA-256.   
